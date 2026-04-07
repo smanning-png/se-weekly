@@ -873,7 +873,7 @@ section, .archive-section { scroll-margin-top: 72px; }
     <h2>Welcome to SE Weekly</h2>
     <p>Enter your name and Homebase email to access the newsletter. You'll only need to do this once.</p>
     <input class="signin-field" id="signin-name" type="text" placeholder="Your name" autocomplete="name">
-    <input class="signin-field" id="signin-email" type="email" placeholder="your@homebase.com" autocomplete="email">
+    <input class="signin-field" id="signin-email" type="email" placeholder="yourname@joinhomebase.com" autocomplete="email">
     <button class="signin-submit" onclick="submitSignIn()">View Newsletter →</button>
     <div class="signin-note">🔒 For internal use only · Homebase Sales Enablement</div>
   </div>
@@ -1644,9 +1644,17 @@ function initSignIn() {
 function submitSignIn() {
   const name  = document.getElementById('signin-name').value.trim();
   const email = document.getElementById('signin-email').value.trim().toLowerCase();
-  if (!name || !email || !email.includes('@')) {
-    document.getElementById('signin-email').style.borderColor = '#e55ccd';
-    document.getElementById('signin-email').placeholder = 'Please enter a valid email';
+  const emailField = document.getElementById('signin-email');
+
+  if (!name) {
+    document.getElementById('signin-name').style.borderColor = '#e55ccd';
+    document.getElementById('signin-name').placeholder = 'Please enter your name';
+    return;
+  }
+  if (!email || !email.endsWith('@joinhomebase.com')) {
+    emailField.style.borderColor = '#e55ccd';
+    emailField.value = '';
+    emailField.placeholder = 'Must be a @joinhomebase.com email';
     return;
   }
   visitor = { name, email };
