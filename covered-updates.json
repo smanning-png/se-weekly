@@ -14,6 +14,42 @@
   },
   "covered": [
     {
+      "issue": 12,
+      "issueDate": "2026-05-18",
+      "department": "PMM",
+      "title": "Spring Payroll Promo — Wave 2 Hits Existing Customers May 19",
+      "topicKey": "spring-payroll-promo",
+      "cardAnchor": "card-payrollwave2",
+      "summary": "Wave 2 extends 3 months free on Payroll to existing customers via in-app + email starting May 19. Campaign live through July 15, 2026. Goals: ~6.2K opps, $165K new MRR, 90% M4+ retention. Auto-applied from May 19; manual exception adds for May 11–19 use package 39/6. Includes Loom walkthrough by Pablo Tac on common exception cases. (Continuation of #10 banner + #11 launch.)"
+    },
+    {
+      "issue": 12,
+      "issueDate": "2026-05-18",
+      "department": "PMM",
+      "title": "Time-Saving Proof Points — Sales-Ready Stats",
+      "topicKey": "platform-time-saving-proof-points",
+      "cardAnchor": "card-proofpoints",
+      "summary": "First wave of customer-backed proof points from the platform time-savings survey: scheduling 90→30 min, payroll 60→15 min (both stat-sig), and 82% say HB makes running their business less stressful. Full library shareout this week."
+    },
+    {
+      "issue": 12,
+      "issueDate": "2026-05-18",
+      "department": "LCM",
+      "title": "\"Clocked In\" Monthly Release Email Launches May 19",
+      "topicKey": "clocked-in-monthly-email",
+      "cardAnchor": "card-clockedin",
+      "summary": "New monthly product update email to all active customers, launching 5/19. Two sections: Quality & Reliability and What's New. Designed to build trust and improve NPS through a transparent product rhythm."
+    },
+    {
+      "issue": 12,
+      "issueDate": "2026-05-18",
+      "department": "CS Ops",
+      "title": "Cash Out Discover Cards: Real Adoption + SMS Experiment Live",
+      "topicKey": "cash-out-discover-acceptance",
+      "cardAnchor": "card-cashoutsms",
+      "summary": "Week 1 of Discover acceptance: 140+ Discover cards linked, 14+ advances processed. SMS web enrollment experiment now live to ~5K employees, going out after scheduled shift clock-outs. One known D4 KYC edge case — escalate to Elizabeth Beaty. (Continuation of #11 Discover unblock.)"
+    },
+    {
       "issue": 11,
       "issueDate": "2026-05-11",
       "department": "RevOps",
@@ -47,7 +83,7 @@
       "title": "3 Months Free Payroll — Spring Promo is Live",
       "topicKey": "spring-payroll-promo",
       "cardAnchor": "card-payrollpromo",
-      "summary": "Spring Payroll Promo live May 11 for net-new, May 18 for existing customers. Offer ends July 15, 2026. Auto-applied at signup; manual exception handling in the gap week. (Continuation of #10 coverage; banner went live in #10, full launch in #11.)"
+      "summary": "Spring Payroll Promo live May 11 for net-new, May 19 for existing customers. Offer ends July 15, 2026. Auto-applied at signup; manual exception handling in the gap week (May 11–19) using package 39/6. (Continuation of #10 coverage; banner went live in #10, full launch in #11.)"
     },
     {
       "issue": 10,
