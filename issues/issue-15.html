@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SE Weekly — Issue #15 · Signal & Scale Edition</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1e0b3a;
+  --purple: #7e3dd4;
+  --pink: #e55ccd;
+  --lime: #e0ff00;
+  --off-white: #F6F6F6;
+  --gray: #8a8a99;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Plus Jakarta Sans", sans-serif; background: var(--off-white); color: var(--navy); font-weight: 500; }
+
+.site-header {
+  background: var(--navy); padding: 0 1.5rem; position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; gap: 1rem; height: 60px;
+  border-bottom: 2px solid var(--purple);
+}
+.brand { font-size: 1rem; font-weight: 800; color: var(--lime); letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
+.site-header nav { display: flex; gap: 1rem; flex: 1; justify-content: center; flex-wrap: nowrap; }
+.site-header nav a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; white-space: nowrap; }
+.site-header nav a:hover { color: var(--lime); }
+.search-wrap { position: relative; flex-shrink: 0; }
+.search-wrap input { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 20px; padding: 0.4rem 1rem 0.4rem 2.2rem; font-family: inherit; font-size: 0.8rem; width: 160px; outline: none; transition: all 0.2s; }
+.search-wrap input::placeholder { color: rgba(255,255,255,0.35); }
+.search-wrap input:focus { background: rgba(255,255,255,0.15); border-color: var(--lime); width: 200px; }
+.s-icon { position: absolute; left: 0.7rem; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.35); font-size: 0.8rem; pointer-events: none; }
+
+.hero { background: var(--navy); padding: 3.5rem 2rem 3rem; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 50%, rgba(126,61,212,.3) 0%, transparent 60%), radial-gradient(ellipse at 70% 50%, rgba(229,92,205,.2) 0%, transparent 60%); }
+.hero-inner { position: relative; max-width: 800px; margin: 0 auto; }
+.issue-badge { display: inline-block; background: var(--lime); color: var(--navy); font-size: 0.7rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.3rem 1rem; border-radius: 20px; margin-bottom: 1.25rem; }
+.hero h1 { font-size: clamp(2rem,5vw,3.2rem); font-weight: 800; color: white; line-height: 1.1; margin-bottom: 0.6rem; }
+.hero h1 span { color: var(--lime); }
+.hero .date { color: rgba(255,255,255,.5); font-size: 0.85rem; font-weight: 500; margin-bottom: 1.75rem; }
+
+.audio-player-wrap { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); border-radius: 16px; padding: 1.1rem 1.25rem 1rem; max-width: 480px; width: 100%; margin: 0 auto; }
+.ap-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 0.9rem; gap: 0.75rem; }
+.ap-label { color: white; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.2rem; }
+.ap-tooltip-wrap { position: relative; display: inline-flex; align-items: center; margin-left: 0.3rem; vertical-align: middle; cursor: default; }
+.ap-tooltip-icon { color: rgba(255,255,255,.45); font-size: 0.72rem; line-height: 1; }
+.ap-tooltip-text { display: none; position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: rgba(30,11,58,.95); color: white; font-size: 0.72rem; line-height: 1.5; padding: 0.55rem 0.75rem; border-radius: 8px; width: 220px; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,.3); pointer-events: none; z-index: 10; border: 1px solid rgba(255,255,255,.1); }
+.ap-tooltip-text::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top-color: rgba(30,11,58,.95); }
+.ap-tooltip-wrap:hover .ap-tooltip-text { display: block; }
+.ap-status { color: rgba(255,255,255,.45); font-size: 0.68rem; line-height: 1.4; display: flex; align-items: center; }
+.ap-speed-wrap { display: flex; gap: 0.3rem; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
+.speed-btn { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15); color: rgba(255,255,255,.55); border-radius: 6px; padding: 0.2rem 0.45rem; font-size: 0.65rem; font-weight: 700; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+.speed-btn:hover { background: rgba(255,255,255,.18); color: white; }
+.speed-btn.active { background: var(--purple); border-color: var(--purple); color: white; }
+.ap-progress-wrap { position: relative; height: 4px; background: rgba(255,255,255,.15); border-radius: 4px; cursor: pointer; margin-bottom: 0.3rem; }
+.ap-prog-bar { height: 100%; background: linear-gradient(90deg, var(--purple), var(--pink)); border-radius: 4px; width: 0%; pointer-events: none; }
+.ap-prog-handle { position: absolute; top: 50%; right: calc(100% - 0%); transform: translate(50%, -50%); width: 12px; height: 12px; background: white; border-radius: 50%; box-shadow: 0 1px 4px rgba(0,0,0,.4); pointer-events: none; opacity: 0; transition: opacity 0.15s; }
+.ap-progress-wrap:hover .ap-prog-handle { opacity: 1; }
+.ap-time-row { display: flex; justify-content: space-between; font-size: 0.65rem; color: rgba(255,255,255,.4); margin-bottom: 0.75rem; }
+.ap-controls { display: flex; align-items: center; justify-content: center; gap: 1.25rem; }
+.ap-btn { background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.15s, opacity 0.15s; }
+.ap-btn:hover { opacity: 0.8; transform: scale(1.08); }
+.ap-skip { color: rgba(255,255,255,.7); }
+.ap-skip svg { width: 28px; height: 28px; fill: currentColor; }
+.ap-play { width: 46px; height: 46px; background: var(--purple); border-radius: 50%; transition: background 0.2s, transform 0.15s; }
+.ap-play:hover { background: var(--pink); transform: scale(1.08); }
+.ap-play svg { fill: white; width: 18px; height: 18px; }
+.ap-play .play-icon { margin-left: 3px; }
+.ap-play.playing .play-icon { display: none; }
+.ap-play.playing .pause-icon { display: block !important; }
+
+.tldr-section { max-width: 900px; margin: -1.5rem auto 2rem; padding: 0 1.5rem; position: relative; z-index: 2; }
+.tldr-card { background: var(--navy); border-radius: 16px; padding: 1.75rem 2rem; box-shadow: 0 8px 40px rgba(30,11,58,.2); }
+.tldr-top { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; }
+.tldr-badge { background: var(--purple); color: var(--lime); font-size: 0.65rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.35rem 0.8rem; border-radius: 6px; }
+.tldr-eyebrow { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+.tldr-rows { display: flex; flex-direction: column; gap: 0.55rem; }
+.tldr-row { display: grid; grid-template-columns: 20px 1fr; gap: 0.75rem; align-items: start; background: rgba(255,255,255,.07); border-radius: 10px; padding: 0.8rem 1rem; }
+.tldr-arr { font-weight: 900; color: var(--lime); font-size: 0.9rem; padding-top: 2px; }
+.tldr-txt { font-size: 0.875rem; line-height: 1.55; color: rgba(255,255,255,.92); }
+.tldr-txt strong { font-weight: 800; color: var(--lime); }
+
+.main-content { max-width: 900px; margin: 0 auto; padding: 0 1.5rem 4rem; display: flex; flex-direction: column; gap: 2.5rem; }
+
+.sec-head { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; }
+.sec-tag { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.3rem 0.85rem; border-radius: 20px; flex-shrink: 0; }
+.tag-csops { background: rgba(126,61,212,.15); color: var(--purple); }
+.tag-pmm   { background: rgba(126,61,212,.12); color: var(--purple); }
+.tag-revops{ background: rgba(229,92,205,.12); color: #c040a8; }
+.tag-product{ background: rgba(34,197,94,.12); color: #15803d; }
+.tag-lcm{ background: rgba(46,125,50,.1); color: #2e7d32; }
+.sec-line { flex: 1; height: 1px; background: rgba(30,11,58,.1); }
+
+.card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 20px rgba(30,11,58,.07); transition: transform 0.2s, box-shadow 0.2s; }
+.card + .card { margin-top: 1.25rem; }
+.card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(30,11,58,.12); }
+.card-head { padding: 1.5rem 1.75rem 0; }
+.card-head h2 { font-size: 1.2rem; font-weight: 800; color: var(--navy); margin-bottom: 0.4rem; line-height: 1.3; }
+.card-desc { font-size: 0.84rem; color: var(--gray); line-height: 1.6; margin-bottom: 0.75rem; }
+.update-type { display: inline-block; font-size: 0.65rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.25rem 0.65rem; border-radius: 5px; margin-bottom: 0.75rem; }
+.type-new { background: rgba(34,197,94,.12); color: #15803d; }
+.type-ui { background: rgba(126,61,212,.1); color: var(--purple); }
+.type-func { background: rgba(229,92,205,.1); color: #c040a8; }
+.type-internal { background: rgba(30,11,58,.08); color: var(--navy); }
+.type-gtm { background: rgba(126,61,212,.12); color: var(--purple); }
+.type-rollout { background: rgba(34,197,94,.12); color: #15803d; }
+.type-feature { background: rgba(34,197,94,.12); color: #15803d; }
+.type-experiment { background: rgba(126,61,212,.1); color: var(--purple); }
+.type-promo { background: rgba(229,92,205,.1); color: #c040a8; }
+.type-revops { background: rgba(229,92,205,.12); color: #c040a8; }
+.type-heads-up { background: #fff3cd; color: #856404; }
+.card-body { padding: 1rem 1.75rem 1.75rem; }
+
+.img-wrap { margin: 0 1.75rem 1rem; border-radius: 10px; overflow: hidden; border: 1px solid rgba(30,11,58,.08); position: relative; }
+.img-wrap img { width: 100%; display: block; cursor: zoom-in; }
+.img-cap { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(30,11,58,.8)); color: white; font-size: 0.7rem; padding: 1.5rem 1rem 0.65rem; font-weight: 500; }
+.img-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 0 1.75rem 1rem; }
+.img-grid2 .img-wrap { margin: 0; }
+.img-grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; margin: 0 1.75rem 1rem; }
+.img-grid3 .img-wrap { margin: 0; }
+.img-grid3 .img-wrap img { max-height: 240px; object-fit: cover; object-position: top; }
+
+.pts { display: flex; flex-direction: column; gap: 0.55rem; margin-top: 1.1rem; }
+.pt { display: flex; gap: 0.7rem; align-items: flex-start; padding: 0.7rem 0.9rem; background: var(--off-white); border-radius: 10px; border-left: 3px solid var(--purple); }
+.pt.g { border-left-color: #22c55e; }
+.pt.p { border-left-color: var(--pink); }
+.pt.r { border-left-color: #f59e0b; }
+.pt-ico { font-size: 0.9rem; flex-shrink: 0; margin-top: 2px; }
+.pt-txt { font-size: 0.84rem; line-height: 1.55; color: var(--navy); font-weight: 500; }
+.pt-txt strong { font-weight: 700; }
+.pt-txt code { background: #f0eaf8; padding: 1px 5px; border-radius: 3px; font-family: monospace; font-size: 0.82em; }
+
+.impact-callout { margin-top: 1rem; padding: 0.75rem 1rem; background: rgba(126,61,212,.07); border-left: 3px solid var(--purple); border-radius: 0 8px 8px 0; font-size: 0.84rem; line-height: 1.55; color: var(--navy); }
+.impact-callout strong { font-weight: 700; color: var(--purple); }
+.impact-callout.revops { background: rgba(229,92,205,.07); border-left-color: var(--pink); }
+.impact-callout.revops strong { color: #c040a8; }
+
+.variant-split { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 0 1.75rem 1rem; }
+.variant-box { border-radius: 10px; overflow: hidden; border: 1px solid rgba(30,11,58,.1); }
+.variant-label { padding: 0.55rem 1rem; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
+.variant-label-dark { background: var(--navy); color: var(--lime); }
+.variant-label-purple { background: var(--purple); color: white; }
+.variant-inner { padding: 0.9rem 1rem; background: var(--off-white); font-size: 0.82rem; line-height: 1.6; color: var(--navy); }
+.variant-inner strong { font-weight: 700; }
+
+.step-list { margin: 0 1.75rem 1rem; border-radius: 10px; overflow: hidden; border: 1px solid rgba(30,11,58,.1); }
+.step-item { display: flex; gap: 1rem; padding: 0.9rem 1.25rem; align-items: flex-start; border-bottom: 1px solid rgba(30,11,58,.07); }
+.step-item:last-child { border-bottom: none; }
+.step-item:nth-child(odd) { background: white; }
+.step-item:nth-child(even) { background: var(--off-white); }
+.step-num { width: 26px; height: 26px; background: var(--purple); color: white; border-radius: 50%; font-size: 0.72rem; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.step-label { font-size: 0.84rem; font-weight: 700; color: var(--navy); margin-bottom: 0.2rem; }
+.step-desc { font-size: 0.8rem; color: var(--gray); line-height: 1.5; }
+
+/* CADENCE TABLE */
+.cadence-table { margin: 0 1.75rem 1rem; border-radius: 10px; overflow: hidden; border: 1px solid rgba(30,11,58,.1); }
+.cadence-table-head { display: grid; grid-template-columns: repeat(4,1fr); background: var(--navy); }
+.cth { padding: 0.6rem 0.85rem; font-size: 0.65rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,.7); text-align: center; }
+.cadence-row { display: grid; grid-template-columns: repeat(4,1fr); border-bottom: 1px solid rgba(30,11,58,.07); }
+.cadence-row:last-child { border-bottom: none; }
+.cadence-row:nth-child(even) { background: var(--off-white); }
+.cadence-row:nth-child(odd) { background: white; }
+.cd { padding: 0.65rem 0.85rem; font-size: 0.8rem; color: var(--navy); font-weight: 600; }
+.cd-name { font-weight: 800; }
+.cd-new { color: #15803d; }
+.cd-changed { color: var(--pink); font-weight: 700; }
+.cd-note { font-size: 0.72rem; color: var(--gray); }
+
+.loom-cta { display: block; position: relative; border-radius: 10px; overflow: hidden; margin: 0 1.75rem 1rem; cursor: pointer; }
+.loom-cta img { width: 100%; display: block; filter: brightness(.82); }
+.loom-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(30,11,58,.3); transition: background 0.2s; }
+.loom-cta:hover .loom-overlay { background: rgba(30,11,58,.15); }
+.loom-play { width: 56px; height: 56px; background: rgba(126,61,212,.92); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.loom-play svg { fill: white; width: 20px; height: 20px; margin-left: 3px; }
+.loom-lbl { position: absolute; bottom: 0.75rem; left: 0.75rem; color: white; font-size: 0.75rem; font-weight: 700; background: rgba(0,0,0,.5); padding: 0.25rem 0.6rem; border-radius: 5px; }
+
+.video-modal { display: none; position: fixed; inset: 0; z-index: 900; background: rgba(10,4,24,.92); backdrop-filter: blur(4px); align-items: center; justify-content: center; }
+.video-modal-inner { position: relative; max-width: 860px; width: 92vw; background: #1e0b3a; border-radius: 16px; overflow: hidden; box-shadow: 0 32px 80px rgba(0,0,0,.6); }
+.video-modal-inner video { width: 100%; display: block; max-height: 80vh; object-fit: contain; }
+.video-modal-close { position: absolute; top: 0.75rem; right: 1rem; color: white; font-size: 1.5rem; cursor: pointer; opacity: 0.7; transition: opacity 0.15s; line-height: 1; background: rgba(0,0,0,.4); border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-family: inherit; }
+.video-modal-close:hover { opacity: 1; background: var(--pink); }
+
+#search-results { display: none; position: absolute; top: calc(100% + 8px); right: 0; width: 320px; background: white; border-radius: 12px; padding: 0.75rem 0.5rem; box-shadow: 0 8px 30px rgba(30,11,58,.18); border: 1px solid rgba(30,11,58,.08); z-index: 200; }
+.sri { padding: 0.6rem 0.75rem; border-radius: 8px; cursor: pointer; transition: background 0.15s; }
+.sri:hover { background: var(--off-white); }
+.sri-title { font-size: 0.875rem; font-weight: 700; color: var(--navy); }
+.sri-sec { font-size: 0.7rem; color: var(--gray); margin-top: 0.15rem; }
+.sri-no { font-size: 0.82rem; color: var(--gray); padding: 0.4rem 0.75rem; }
+
+.audio-popup { position: fixed; inset: 0; z-index: 999; display: flex; align-items: center; justify-content: center; background: rgba(30,11,58,.55); backdrop-filter: blur(3px); opacity: 0; pointer-events: none; transition: opacity 0.25s; }
+.audio-popup.visible { opacity: 1; pointer-events: all; }
+.audio-popup-card { background: white; border-radius: 18px; padding: 2rem 2rem 1.5rem; max-width: 360px; width: 90%; text-align: center; box-shadow: 0 20px 60px rgba(30,11,58,.25); transform: translateY(12px); transition: transform 0.25s; }
+.audio-popup.visible .audio-popup-card { transform: translateY(0); }
+.audio-popup-icon { font-size: 2.2rem; margin-bottom: 0.75rem; }
+.audio-popup-card h3 { font-size: 1rem; font-weight: 800; color: var(--navy); margin-bottom: 0.6rem; line-height: 1.3; }
+.audio-popup-card p { font-size: 0.84rem; color: #555; line-height: 1.6; margin-bottom: 1.25rem; }
+.audio-popup-dismiss { background: var(--purple); color: white; border: none; border-radius: 10px; padding: 0.6rem 1.5rem; font-family: inherit; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+.audio-popup-dismiss:hover { background: var(--pink); }
+
+.archive-section { background: white; border-radius: 16px; padding: 1.75rem; box-shadow: 0 2px 20px rgba(30,11,58,.07); }
+.archive-section > h3 { font-size: 1rem; font-weight: 800; color: var(--navy); margin-bottom: 1.25rem; }
+.arc-issue { border: 1px solid rgba(30,11,58,.1); border-radius: 12px; margin-bottom: 0.75rem; overflow: hidden; transition: border-color 0.2s; }
+.arc-issue:hover { border-color: rgba(126,61,212,.3); }
+.arc-issue-header { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; cursor: pointer; user-select: none; }
+.arc-issue-header:hover { background: rgba(126,61,212,.03); }
+.arc-chevron { color: var(--gray); font-size: 0.75rem; transition: transform 0.25s; flex-shrink: 0; margin-left: auto; }
+.arc-issue.open .arc-chevron { transform: rotate(180deg); }
+.arc-issue-meta { flex: 1; min-width: 0; }
+.arc-date { font-size: 0.68rem; color: var(--gray); font-weight: 600; margin-bottom: 0.2rem; }
+.arc-title { font-size: 0.9rem; font-weight: 700; color: var(--navy); }
+.arc-tag { display: inline-block; margin-top: 0.35rem; font-size: 0.65rem; font-weight: 700; background: rgba(126,61,212,.1); color: var(--purple); padding: 0.2rem 0.55rem; border-radius: 4px; }
+.arc-body { display: none; border-top: 1px solid rgba(30,11,58,.07); padding: 1.25rem 1.5rem 1.5rem; }
+.arc-issue.open .arc-body { display: block; }
+.arc-dept { margin-bottom: 1.25rem; }
+.arc-dept:last-child { margin-bottom: 0; }
+.arc-dept-label { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.25rem 0.65rem; border-radius: 20px; display: inline-block; margin-bottom: 0.75rem; }
+.arc-dept-label.csops { background: rgba(126,61,212,.15); color: var(--purple); }
+.arc-dept-label.pmm { background: rgba(126,61,212,.12); color: var(--purple); }
+.arc-dept-label.revops { background: rgba(229,92,205,.12); color: #c040a8; }
+.arc-dept-label.lcm { background: rgba(46,125,50,.1); color: #2e7d32; }
+.arc-update { padding: 0.7rem 0.9rem; background: var(--off-white); border-radius: 8px; border-left: 3px solid var(--purple); margin-bottom: 0.5rem; }
+.arc-update:last-child { margin-bottom: 0; }
+.arc-update-title { font-size: 0.82rem; font-weight: 700; color: var(--navy); margin-bottom: 0.25rem; }
+.arc-update-body { font-size: 0.78rem; color: #555; line-height: 1.55; }
+.arc-update-type { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--purple); margin-bottom: 0.3rem; }
+.view-issue-btn { background: var(--purple); color: white; border: none; border-radius: 8px; padding: 0.45rem 0.9rem; font-family: inherit; font-size: 0.72rem; font-weight: 700; cursor: pointer; transition: background 0.15s, transform 0.1s; white-space: nowrap; flex-shrink: 0; margin-right: 0.5rem; }
+.view-issue-btn:hover { background: var(--pink); transform: scale(1.03); }
+
+.lightbox { position: fixed; inset: 0; z-index: 1000; background: rgba(10,4,24,.92); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s; cursor: zoom-out; padding: 2rem; }
+.lightbox.visible { opacity: 1; pointer-events: all; }
+.lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 10px; box-shadow: 0 20px 60px rgba(0,0,0,.5); object-fit: contain; transform: scale(0.95); transition: transform 0.2s; }
+.lightbox.visible img { transform: scale(1); }
+.lightbox-close { position: absolute; top: 1.25rem; right: 1.5rem; color: white; font-size: 1.5rem; cursor: pointer; opacity: 0.7; transition: opacity 0.15s; line-height: 1; }
+.lightbox-close:hover { opacity: 1; }
+
+.site-footer { background: var(--navy); padding: 2rem; text-align: center; color: rgba(255,255,255,.4); font-size: 0.8rem; }
+.site-footer strong { color: var(--lime); }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+section, .tldr-card, .archive-section { animation: fadeUp 0.45s ease both; }
+section, .archive-section { scroll-margin-top: 72px; }
+.card { scroll-margin-top: 72px; }
+
+.signin-overlay { position: fixed; inset: 0; z-index: 2000; background: rgba(30,11,58,.85); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+.signin-overlay.visible { opacity: 1; pointer-events: all; }
+.signin-card { background: white; border-radius: 20px; padding: 2.25rem 2rem 2rem; max-width: 400px; width: 92%; text-align: center; box-shadow: 0 24px 80px rgba(0,0,0,.35); transform: translateY(20px); transition: transform 0.3s; }
+.signin-overlay.visible .signin-card { transform: translateY(0); }
+.signin-logo { font-size: 2rem; margin-bottom: 0.5rem; }
+.signin-card h2 { font-size: 1.15rem; font-weight: 800; color: var(--navy); margin-bottom: 0.4rem; }
+.signin-card p { font-size: 0.82rem; color: var(--gray); line-height: 1.55; margin-bottom: 1.5rem; }
+.signin-field { width: 100%; padding: 0.7rem 1rem; border: 1.5px solid rgba(30,11,58,.15); border-radius: 10px; font-family: inherit; font-size: 0.88rem; outline: none; transition: border-color 0.2s; margin-bottom: 0.75rem; box-sizing: border-box; color: var(--navy); }
+.signin-field:focus { border-color: var(--purple); }
+.signin-submit { width: 100%; padding: 0.75rem; background: var(--purple); color: white; border: none; border-radius: 10px; font-family: inherit; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+.signin-submit:hover { background: var(--pink); }
+.signin-note { font-size: 0.7rem; color: var(--gray); margin-top: 0.9rem; }
+
+@media(max-width:480px) {
+  .site-header nav { display:none; }
+  .img-grid2, .img-grid3, .variant-split { grid-template-columns:1fr; }
+  .cadence-table-head, .cadence-row { grid-template-columns: 1fr 1fr; }
+  .search-wrap input { width:110px; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand">⚡ SE Weekly</div>
+  <nav>
+    <a href="#product">Product</a>
+    <a href="#pmm">PMM</a>
+    <a href="#revops">RevOps</a>
+    <a href="#archive">Archive</a>
+  </nav>
+  <div class="search-wrap">
+    <span class="s-icon">🔍</span>
+    <input type="text" id="search-input" placeholder="Search newsletter…" autocomplete="off">
+    <div id="search-results"><div id="search-result-list"></div></div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="issue-badge">Issue #15 — Week of June 8, 2026</div>
+    <h1>Your weekly edge,<br><span>delivered.</span></h1>
+    <div class="date">📬 Signal & Scale Edition &nbsp;·&nbsp; Sales Enablement</div>
+    <div class="audio-player-wrap">
+      <div class="ap-top">
+        <div class="ap-info">
+          <div class="ap-label">🎙 Listen to this issue</div>
+          <div class="ap-status" id="audio-status">~5 min · OpenAI Shimmer
+            <span class="ap-tooltip-wrap">
+              <span class="ap-tooltip-icon">ⓘ</span>
+              <span class="ap-tooltip-text">First time only: audio is generated on demand via OpenAI. This may take up to 30 seconds. Subsequent plays are instant.</span>
+            </span>
+          </div>
+        </div>
+        <div class="ap-speed-wrap">
+          <button class="speed-btn active" data-speed="1" onclick="setSpeed(1)">1×</button>
+          <button class="speed-btn" data-speed="1.25" onclick="setSpeed(1.25)">1.25×</button>
+          <button class="speed-btn" data-speed="1.5" onclick="setSpeed(1.5)">1.5×</button>
+          <button class="speed-btn" data-speed="0.75" onclick="setSpeed(0.75)">0.75×</button>
+        </div>
+      </div>
+      <div class="ap-progress-wrap" id="prog-wrap" onclick="seekAudio(event)">
+        <div class="ap-prog-bar" id="prog-bar"></div>
+        <div class="ap-prog-handle" id="prog-handle"></div>
+      </div>
+      <div class="ap-time-row"><span id="ap-current">0:00</span><span id="ap-duration">--:--</span></div>
+      <div class="ap-controls">
+        <button class="ap-btn ap-skip" onclick="skipAudio(-15)" title="Rewind 15s">
+          <svg viewBox="0 0 24 24"><path d="M12 5V2L7 7l5 5V8c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/><text x="12" y="14.5" text-anchor="middle" font-size="5.5" font-family="Plus Jakarta Sans,sans-serif" font-weight="800" fill="currentColor">15</text></svg>
+        </button>
+        <button class="ap-btn ap-play" id="play-btn" onclick="toggleAudio()">
+          <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <svg class="pause-icon" viewBox="0 0 24 24" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        </button>
+        <button class="ap-btn ap-skip" onclick="skipAudio(15)" title="Forward 15s">
+          <svg viewBox="0 0 24 24"><path d="M12 5V2l5 5-5 5V8c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6h2c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8z"/><text x="12" y="14.5" text-anchor="middle" font-size="5.5" font-family="Plus Jakarta Sans,sans-serif" font-weight="800" fill="currentColor">15</text></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="tldr-section">
+  <div class="tldr-card">
+    <div class="tldr-top">
+      <span class="tldr-badge">TL;DR</span>
+      <span class="tldr-eyebrow">4 updates this week · Signal & scale</span>
+    </div>
+    <div class="tldr-rows">
+      <div class="tldr-row"><div class="tldr-arr">→</div><div class="tldr-txt"><strong>Homebase Assistant Alpha expanded to ~1K beta users</strong> — Web launch email and discovery nudge are live; mobile engagement is still blocked by Amplitude SDK configuration.</div></div>
+      <div class="tldr-row"><div class="tldr-arr">→</div><div class="tldr-txt"><strong>Homebase Boost + General Application roles</strong> — Hiring is adding lower-cost boost options for job visibility and expanding General Application access to all new Hiring users.</div></div>
+      <div class="tldr-row"><div class="tldr-arr">→</div><div class="tldr-txt"><strong>Q3 targeting is being shaped by direct-mail learnings</strong> — Employee size is the clearest lever; Caregiving and Medical/Vet are the strongest industry signals in the early Q1 read.</div></div>
+      <div class="tldr-row"><div class="tldr-arr">→</div><div class="tldr-txt"><strong>GTM OS Pipeline + Blitz Beta restart now target Jun 15</strong> — Launch moved from Jun 10 to Monday Jun 15 while Lee works through the bug backlog and manager/seller tracking alignment.</div></div>
+    </div>
+  </div>
+</div>
+
+  </div>
+</div>
+
+<main class="main-content">
+  <section id="product">
+    <div class="sec-head"><span class="sec-tag tag-product">🧪 Product</span><div class="sec-line"></div></div>
+    <div class="card" id="card-hbboost-general-roles">
+      <div class="card-head"><span class="update-type type-feature">Hiring Update</span><h2>Homebase Boost + General Application Roles</h2><p class="card-desc">Two Hiring updates matter for the field: Homebase Boost gives OAMs a lower-cost visibility option for job posts, and General Application roles now appear for all new Hiring users from day one.</p></div>
+      <div class="img-wrap" onclick="openLightbox(this.querySelector('img').src)"><img src="data:image/webp;base64,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" alt="Homebase Boost job post modal examples showing Homebase Boost and ZipRecruiter options" /><div class="img-cap">Homebase Boost UI examples — compressed internal visual from supplied screenshots</div></div>
+      <div class="card-body"><div class="pts">
+        <div class="pt"><span class="pt-ico">📌</span><div class="pt-txt"><strong>What sales needs to know:</strong> Homebase Boost is available as a premium placement option for job posts, while General Application access is expanding beyond TLWA winners to all new Hiring users.</div></div>
+        <div class="pt g"><span class="pt-ico">🔍</span><div class="pt-txt"><strong>Why it’s happening / changing:</strong> Hiring customers need more applicant volume without defaulting to higher-cost boost options, and new users need a faster way to start collecting applicant interest immediately.</div></div>
+        <div class="pt p"><span class="pt-ico">💬</span><div class="pt-txt"><strong>How it impacts day-to-day:</strong> Use Boost as a practical visibility lever when a customer is struggling with applicant flow. For new Hiring users, set the expectation that General Application can help them capture interest even before every role is fully built out.</div></div>
+      </div><div class="impact-callout"><strong>Talk track:</strong> “Homebase is making Hiring easier to activate: customers can boost a role for more visibility and can collect general applicant interest from day one.” Visual dates/prices shown in screenshots are product examples; confirm live package details before quoting.</div></div>
+    </div>
+  </section>
+
+  <section id="pmm">
+    <div class="sec-head"><span class="sec-tag tag-pmm">📣 PMM</span><div class="sec-line"></div></div>
+    <div class="card" id="card-assistant-alpha">
+      <div class="card-head"><span class="update-type type-experiment">Beta Expansion</span><h2>Homebase Assistant Alpha Expands to ~1K Beta Users</h2><p class="card-desc">Homebase Assistant Alpha has moved into a broader beta audience, with web launch email and discovery nudge live. Mobile engagement is still blocked by Amplitude SDK configuration for deep links.</p></div>
+      <div class="card-body"><div class="pts">
+        <div class="pt"><span class="pt-ico">📌</span><div class="pt-txt"><strong>What sales needs to know:</strong> Homebase Assistant Alpha is now in front of roughly 1K beta users. The launch email saw a 52% open rate, and the web discovery nudge has 304 views and 19 completions.</div></div>
+        <div class="pt g"><span class="pt-ico">🧪</span><div class="pt-txt"><strong>Why it’s happening / changing:</strong> PMM and LCM are testing whether owners understand and engage with Assistant beyond starter questions before treating it as a broader GTM story.</div></div>
+        <div class="pt p"><span class="pt-ico">💬</span><div class="pt-txt"><strong>How it impacts day-to-day:</strong> Keep this as awareness, not a promise. If prospects ask about AI assistance, say testing is expanding and the team is learning what owners actually use before wider positioning.</div></div>
+        <div class="pt r"><span class="pt-ico">⚠️</span><div class="pt-txt"><strong>Watchout:</strong> Mobile nudges are still pending Amplitude SDK/deep-link configuration, so do not position this as fully cross-platform yet.</div></div>
+      </div><div class="impact-callout"><strong>Field stance:</strong> Treat Assistant as a signal of direction, not a packaged sales claim. Capture questions and feedback, but do not overpromise availability or scope.</div></div>
+    </div>
+    <div class="card" id="card-q3-targeting">
+      <div class="card-head"><span class="update-type type-gtm">GTM Planning</span><h2>What’s Shaping Q3 Targeting</h2><p class="card-desc">The Q1 direct-mail 60-day read is giving PMM early targeting signals for Q3 planning: employee size is the clearest lever, and Caregiving plus Medical/Vet are the strongest industry signals.</p></div>
+      <div class="card-body"><div class="pts">
+        <div class="pt"><span class="pt-ico">📌</span><div class="pt-txt"><strong>What sales needs to know:</strong> Early Q1 direct-mail analysis shows no clean winner between letter vs. postcard yet, but the audience signals are clearer than the format signals.</div></div>
+        <div class="pt g"><span class="pt-ico">📈</span><div class="pt-txt"><strong>Why it’s happening / changing:</strong> At 60 days, employee size is showing the clearest conversion lift, with paid conversion jumping materially for larger employee bands. Caregiving and Medical/Vet are the strongest industry standouts.</div></div>
+        <div class="pt p"><span class="pt-ico">🎯</span><div class="pt-txt"><strong>How it impacts day-to-day:</strong> Expect Q3 campaigns and list builds to lean harder into higher-employee-count businesses and select verticals. Use the signal as context, not as a rep-level targeting rule until PMM publishes approved plays.</div></div>
+      </div><div class="impact-callout"><strong>PMM caveat:</strong> These are 60-day reads; the standard matchback window is 90 days. Treat this as directional Q3 planning input, not a finished GTM decision.</div></div>
+    </div>
+  </section>
+
+  <section id="revops">
+    <div class="sec-head"><span class="sec-tag tag-revops">📊 RevOps</span><div class="sec-line"></div></div>
+    <div class="card" id="card-gtmos-inception">
+      <div class="card-head"><span class="update-type type-revops">Launch Timing Update</span><h2>GTM OS Pipeline Mode for Inception + Blitz Beta Restart — Targeting Jun 15</h2><p class="card-desc">GTM OS Pipeline Mode for Inception and the Blitz Beta restart have moved from the earlier Jun 10 target to Monday, Jun 15 while the team works through outstanding bug backlog and tracking alignment.</p></div>
+      <div class="card-body"><div class="pts">
+        <div class="pt"><span class="pt-ico">📌</span><div class="pt-txt"><strong>What sales needs to know:</strong> The anticipated launch date is now <strong>Monday, Jun 15</strong> for both GTM OS Pipeline Mode for Inception and the Blitz Beta restart.</div></div>
+        <div class="pt r"><span class="pt-ico">🛠️</span><div class="pt-txt"><strong>Why it’s happening / changing:</strong> Lee needs this week to address backlog tickets before the team can launch confidently, especially around manager/seller tracking metrics.</div></div>
+        <div class="pt p"><span class="pt-ico">📅</span><div class="pt-txt"><strong>How it impacts day-to-day:</strong> Expect a Friday go/no-go check, Monday launch block for the Inception team, and a scheduled Blitz Beta restart message before the motion restarts.</div></div>
+      </div></div>
+    </div>
+  </section>
+
+  <section id="archive">
+    <div class="archive-section">
+      <h3>📂 Past Issues</h3>
+      <div class="arc-issue" id="arc-14new"><div class="arc-issue-header" onclick="toggleArc('arc-14new')"><button class="view-issue-btn" onclick="window.open('https://smanning-png.github.io/se-weekly/issues/issue-14.html','_blank');event.stopPropagation()">📖 Full Issue</button><div class="arc-issue-meta"><div class="arc-date">June 1, 2026 · Issue #14</div><div class="arc-title">Sales Connect Widgets · Designbase Theme Refresh · Hiring V1→V2 Reminder</div><span class="arc-tag">Issue #14</span></div><span class="arc-chevron">▼</span></div><div class="arc-body"><div class="arc-dept"><span class="arc-dept-label pmm">🧪 Product</span><div class="arc-update"><div class="arc-update-type">Phased Rollout</div><div class="arc-update-title">Sales Connect Widgets — Launching Week of June 8</div><div class="arc-update-body">Payroll SS flow pages add “Call me now” and “Schedule a call” CTAs, plus in-app “X rep is calling you” alerts.</div></div><div class="arc-update"><div class="arc-update-type">Visual Refresh</div><div class="arc-update-title">Designbase Theme Refresh</div><div class="arc-update-body">Core web/mobile visual styles refresh with no workflow changes.</div></div></div><div class="arc-dept"><span class="arc-dept-label lcm">✉️ LCM</span><div class="arc-update"><div class="arc-update-type">Reminder Campaign</div><div class="arc-update-title">Hiring V1 → V2 Migration Reminder</div><div class="arc-update-body">June 3 reminder email nudges remaining V1 Hiring customers toward Hiring Assistant before the July 14 target.</div></div></div></div></div>
+      <div class="arc-issue" id="arc-13new"><div class="arc-issue-header" onclick="toggleArc('arc-13new')"><button class="view-issue-btn" onclick="window.open('https://smanning-png.github.io/se-weekly/issues/issue-13.html','_blank');event.stopPropagation()">📖 Full Issue</button><div class="arc-issue-meta"><div class="arc-date">May 25, 2026 · Issue #13</div><div class="arc-title">Blitz Beta Cadences · Break Management Awareness · Cash Out FAQ · TLWA Hiring Assistant Reminders</div><span class="arc-tag">Issue #13</span></div><span class="arc-chevron">▼</span></div><div class="arc-body"><div class="arc-dept"><span class="arc-dept-label revops">📊 RevOps</span><div class="arc-update"><div class="arc-update-type">Cadence Update</div><div class="arc-update-title">Blitz Beta Cadences Are Live</div><div class="arc-update-body">Blitz runs through two auto-routed 5-day cadences.</div></div></div></div></div>
+      <div class="arc-issue" id="arc-12new"><div class="arc-issue-header" onclick="toggleArc('arc-12new')"><button class="view-issue-btn" onclick="window.open('https://smanning-png.github.io/se-weekly/issues/issue-12.html','_blank');event.stopPropagation()">📖 Full Issue</button><div class="arc-issue-meta"><div class="arc-date">May 18, 2026 · Issue #12</div><div class="arc-title">Spring Payroll Wave 2 · Time-Saving Proof Points · Clocked In · Cash Out Discover + SMS</div><span class="arc-tag">Issue #12</span></div><span class="arc-chevron">▼</span></div><div class="arc-body"><div class="arc-dept"><span class="arc-dept-label pmm">📣 PMM</span><div class="arc-update"><div class="arc-update-type">Promo Update</div><div class="arc-update-title">Spring Payroll Promo — Wave 2</div><div class="arc-update-body">3 months free extends to existing customers.</div></div></div></div></div>
+      <div class="arc-issue" id="arc-11new"><div class="arc-issue-header" onclick="toggleArc('arc-11new')"><button class="view-issue-btn" onclick="window.open('https://smanning-png.github.io/se-weekly/issues/issue-11.html','_blank');event.stopPropagation()">📖 Full Issue</button><div class="arc-issue-meta"><div class="arc-date">May 11, 2026 · Issue #11</div><div class="arc-title">3 Months Free Payroll Live · Cash Out Discover Cards · NHP Overdue Logic · Blitz Mode Beta</div><span class="arc-tag">Issue #11</span></div><span class="arc-chevron">▼</span></div><div class="arc-body"><div class="arc-dept"><span class="arc-dept-label pmm">📣 PMM</span><div class="arc-update"><div class="arc-update-type">Promo Live</div><div class="arc-update-title">3 Months Free Payroll</div><div class="arc-update-body">Spring promo goes live.</div></div></div></div></div>
+      <div class="arc-issue" id="arc-10new"><div class="arc-issue-header" onclick="toggleArc('arc-10new')"><button class="view-issue-btn" onclick="window.open('https://smanning-png.github.io/se-weekly/issues/issue-10.html','_blank');event.stopPropagation()">📖 Full Issue</button><div class="arc-issue-meta"><div class="arc-date">May 5, 2026 · Issue #10</div><div class="arc-title">Spring Payroll Banner · Hiring V1→V2 Migration · In-App Sales Call Experiment · Left Nav Phase 1 · Auto-Close Rules · Stage Cadences</div><span class="arc-tag">Issue #10</span></div><span class="arc-chevron">▼</span></div><div class="arc-body"><div class="arc-dept"><span class="arc-dept-label pmm">📣 PMM</span><div class="arc-update"><div class="arc-update-type">In-App Promo</div><div class="arc-update-title">Spring Payroll Promo</div><div class="arc-update-body">In-app banner driving Payroll + Plus upgrades.</div></div></div></div></div>
+    </div>
+  </section>
+</main>
+
+<div class="video-modal" id="video-modal" onclick="closeVideoModal()">
+  <div class="video-modal-inner" onclick="event.stopPropagation()">
+    <button class="video-modal-close" onclick="closeVideoModal()">✕</button>
+    <video id="modal-video" controls preload="none">
+      <source src="data:video/mp4;base64,[BASE64_IMAGE_STRIPPED_FOR_REFERENCE]" type="video/mp4">
+    </video>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close" onclick="closeLightbox()">✕</span>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<footer class="site-footer">
+  Built with ❤️ by <strong>Sales Enablement</strong> · Signal & Scale Edition · Questions? Ping the SE team on Slack
+</footer>
+
+<div class="signin-overlay" id="signin-overlay">
+  <div class="signin-card">
+    <div class="signin-logo">⚡</div>
+    <h2>Welcome to SE Weekly</h2>
+    <p>Enter your name and Homebase email to access the newsletter. You'll only need to do this once.</p>
+    <input class="signin-field" id="signin-name" type="text" placeholder="Your name" autocomplete="name">
+    <input class="signin-field" id="signin-email" type="email" placeholder="yourname@joinhomebase.com" autocomplete="email">
+    <button class="signin-submit" onclick="submitSignIn()">View Newsletter →</button>
+    <div class="signin-note">🔒 For internal use only · Homebase Sales Enablement</div>
+  </div>
+</div>
+
+<div class="audio-popup" id="audio-popup">
+  <div class="audio-popup-card">
+    <div class="audio-popup-icon">🎙</div>
+    <h3>Generating your audio…</h3>
+    <p>The first time you hit play, it may take up to 30 seconds. Your audio will play automatically once it's ready!</p>
+    <button class="audio-popup-dismiss" onclick="dismissPopup()">Got it</button>
+  </div>
+</div>
+
+<script>
+const TTS_WORKER_URL = 'https://se-weekly.smanning-39c.workers.dev';
+const OPENAI_VOICE = 'shimmer';
+const SCRIPT = `Welcome to SE Weekly — Issue 15, the Signal and Scale Edition. Four updates this week. First, Product: Homebase Boost and General Application roles. Homebase Boost gives Hiring customers a lower-cost way to increase job visibility, while General Application roles now appear for all new Hiring users from day one. The sales takeaway: when a customer is worried about applicant flow, Boost can be framed as a practical visibility lever, and General Application can help them capture interest before every role is fully built out. Second, PMM: Homebase Assistant Alpha has expanded to roughly one thousand beta users. The web launch email and discovery nudge are live, with a 52 percent open rate on the email and early nudge engagement. This is still not a broad availability claim. Treat it as awareness and a signal of direction, especially because mobile nudges are still blocked by Amplitude SDK configuration. Third, PMM again: Q3 targeting is being shaped by early direct mail learnings. At the 60-day read, letter versus postcard is not settled, but audience signals are clearer. Employee size is the strongest lever, and Caregiving plus Medical and Vet are the strongest industry standouts. Use this as GTM context, not a rep-level targeting rule, until PMM publishes approved plays. Fourth, RevOps: GTM OS Pipeline Mode for Inception and the Blitz Beta restart are now targeting Monday, June 15. The timing moved from the earlier June 10 target because Lee needs this week to work through the bug backlog and manager and seller tracking alignment. Expect a Friday go/no-go check and a Monday launch block before treating the motion as live. That’s your week.`;
+
+let audioEl = null, audioLoading = false, currentSpeed = 1, hasPlayedBefore = false;
+function dismissPopup() { document.getElementById('audio-popup').classList.remove('visible'); }
+function fmtTime(s) { if (!s || !isFinite(s) || isNaN(s) || s===Infinity) return '--:--'; const m=Math.floor(s/60),sec=Math.floor(s%60); return m+':'+sec.toString().padStart(2,'0'); }
+function setMainPlayState(p) { const b=document.getElementById('play-btn'); if(!b)return; p?b.classList.add('playing'):b.classList.remove('playing'); }
+function setMainStatus(t) { const e=document.getElementById('audio-status'); if(e)e.textContent=t; }
+function updateProgress() { if(!audioEl)return; const d=audioEl.duration,ok=d&&isFinite(d)&&d>0,pct=ok?(audioEl.currentTime/d)*100:0; const pb=document.getElementById('prog-bar'),ph=document.getElementById('prog-handle'),cur=document.getElementById('ap-current'),dur=document.getElementById('ap-duration'); if(pb)pb.style.width=pct+'%'; if(ph)ph.style.right='calc('+(100-pct)+'%)'; if(cur)cur.textContent=fmtTime(audioEl.currentTime); if(dur)dur.textContent=fmtTime(audioEl.duration); }
+function seekAudio(e) { if(!audioEl||!audioEl.duration)return; const w=document.getElementById('prog-wrap'),pct=Math.max(0,Math.min(1,(e.clientX-w.getBoundingClientRect().left)/w.offsetWidth)); audioEl.currentTime=pct*audioEl.duration; }
+function skipAudio(s) { if(!audioEl)return; audioEl.currentTime=Math.max(0,Math.min(audioEl.duration||0,audioEl.currentTime+s)); }
+function setSpeed(s) { currentSpeed=s; if(audioEl)audioEl.playbackRate=s; document.querySelectorAll('.speed-btn[data-speed]').forEach(b=>b.classList.toggle('active',parseFloat(b.dataset.speed)===s)); }
+function attachMainAudioEvents(el) { el.addEventListener('play',()=>{setMainPlayState(true);setMainStatus('Playing…')}); el.addEventListener('pause',()=>{setMainPlayState(false);setMainStatus('Paused — tap to resume')}); el.addEventListener('ended',()=>{setMainPlayState(false);setMainStatus('✅ Finished — tap to replay');document.getElementById('prog-bar').style.width='100%';audioEl=null;}); el.addEventListener('error',()=>{setMainPlayState(false);setMainStatus('Playback error — try again');audioEl=null;}); el.addEventListener('timeupdate',updateProgress); el.addEventListener('loadedmetadata',updateProgress); el.addEventListener('durationchange',updateProgress); el.addEventListener('canplay',updateProgress); }
+const synthSessions={};
+function getBestVoice() { const vs=window.speechSynthesis.getVoices(),pref=['Samantha','Google US English','Microsoft Aria Online','Microsoft Aria','Karen','Moira','Victoria','Google UK English Female']; for(const n of pref){const v=vs.find(v=>v.name.includes(n));if(v)return v;} return null; }
+function useBrowserTTS(script,btn,statusEl,sk) { const synth=window.speechSynthesis; if(synthSessions[sk]&&synth.speaking){if(!synth.paused){synth.pause();return;}else{synth.resume();return;}} synth.cancel(); const utt=new SpeechSynthesisUtterance(script); utt.rate=0.92; const v=getBestVoice(); if(v)utt.voice=v; utt.onstart=()=>{btn.classList.add('playing');statusEl.textContent='Playing (browser voice)…';}; utt.onpause=()=>{btn.classList.remove('playing');statusEl.textContent='Paused — tap to resume';}; utt.onresume=()=>{btn.classList.add('playing');statusEl.textContent='Playing (browser voice)…';}; utt.onend=()=>{btn.classList.remove('playing');statusEl.textContent='✅ Done — tap to replay';synthSessions[sk]=null;}; utt.onerror=()=>{btn.classList.remove('playing');statusEl.textContent='Audio unavailable';synthSessions[sk]=null;}; synthSessions[sk]=utt; synth.speak(utt); }
+if(typeof speechSynthesis!=='undefined'&&speechSynthesis.onvoiceschanged!==undefined)speechSynthesis.onvoiceschanged=()=>{};
+async function toggleAudio() { const btn=document.getElementById('play-btn'),status=document.getElementById('audio-status'); if(audioEl){if(audioEl.paused){try{await audioEl.play();}catch(e){console.warn(e)}}else{audioEl.pause();}return;} if(audioLoading)return; audioLoading=true;btn.style.opacity='0.5';btn.disabled=true; if(!hasPlayedBefore){hasPlayedBefore=true;document.getElementById('audio-popup').classList.add('visible');setTimeout(dismissPopup,6000);} status.textContent='Generating audio…'; try{ if(!TTS_WORKER_URL||TTS_WORKER_URL==='PASTE_WORKER_URL_HERE')throw new Error('Worker URL not set'); const res=await fetch(TTS_WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:SCRIPT,voice:OPENAI_VOICE})}); if(!res.ok){const err=await res.text();throw new Error('TTS Worker '+res.status+': '+err);} const ab=await res.arrayBuffer(),blob=new Blob([ab],{type:'audio/mpeg'}),url=URL.createObjectURL(blob); audioEl=new Audio();audioEl.preload='auto'; audioEl.addEventListener('loadedmetadata',()=>{if(audioEl.duration===Infinity||!isFinite(audioEl.duration))audioEl.currentTime=1e101;},{once:true}); audioEl.addEventListener('timeupdate',()=>{if(audioEl.currentTime===Infinity||audioEl.currentTime>1e10)audioEl.currentTime=0;},{once:true}); attachMainAudioEvents(audioEl);audioEl.src=url;audioEl.playbackRate=currentSpeed;audioEl.load(); btn.style.opacity='1';btn.disabled=false;audioLoading=false; try{await audioEl.play();}catch(e){console.warn('play() blocked:',e)} }catch(err){ console.warn('TTS Worker failed:',err);btn.style.opacity='1';btn.disabled=false;audioLoading=false;audioEl=null;status.textContent='⚠️ '+(err.message||'Worker error').slice(0,80); setTimeout(()=>useBrowserTTS(SCRIPT,btn,status,'main'),2000); } }
+
+const SI=[
+  {t:'Homebase Boost + General Application Roles',s:'Product · Issue #15',a:'#card-hbboost-general-roles',k:'homebase boost hiring general application roles applicants job post visibility ziprecruiter june 8'},
+  {t:'Homebase Assistant Alpha Expands to 1K Beta Users',s:'PMM · Issue #15',a:'#card-assistant-alpha',k:'homebase assistant alpha beta 1000 users discovery nudge web mobile amplitude june 8'},
+  {t:'What’s Shaping Q3 Targeting',s:'PMM · Issue #15',a:'#card-q3-targeting',k:'q3 targeting direct mail letter postcard employee size caregiving medical vet q1 60 day matchback'},
+  {t:'GTM OS Pipeline Mode for Inception + Blitz Beta Restart',s:'RevOps · Issue #15',a:'#card-gtmos-inception',k:'gtm os pipeline inception blitz beta restart june 15 backlog manager seller tracking'},
+  {t:'Sales Connect Widgets — Launching Week of June 8',s:'Product · Issue #14',a:'#arc-14new',k:'sales connect payroll ss widget call me now schedule a call x rep calling payroll setup june 8'},
+  {t:'Designbase Theme Refresh — Updated App Visual System',s:'Product · Issue #14',a:'#arc-14new',k:'designbase theme refresh visual update tokens web mobile components june 1'},
+  {t:'Hiring V1 → V2 Migration Reminder',s:'LCM · Issue #14',a:'#arc-14new',k:'hiring v1 v2 migration reminder email june 3 july 14 hiring assistant lcm'},
+  {t:'Blitz Beta Cadences',s:'RevOps · Issue #13',a:'#arc-13new',k:'blitz beta cadences five day auto routed sms email talk tracks may 25'},
+  {t:'Break Management Awareness Push',s:'PMM · Issue #13',a:'#arc-13new',k:'break management awareness newsletter in-app nudge plus all-in-one may 25'},
+  {t:'Cash Out Employee FAQ Page',s:'CS Ops · Issue #13',a:'#arc-13new',k:'cash out employee faq public page joinhomebase faq-cashout may 25'},
+  {t:'Spring Payroll Wave 2',s:'PMM · Issue #12',a:'#arc-12new',k:'spring payroll wave 2 existing customers may 18'},
+  {t:'3 Months Free Payroll — Spring Promo',s:'PMM · Issue #11',a:'#arc-11new',k:'3 months free payroll spring promo may 11'},
+  {t:'Spring Payroll Promo — In-App Banner',s:'PMM · Issue #10',a:'#arc-10new',k:'spring payroll promo banner 3 months free plus upgrade may 5'}
+];
+
+function toggleArc(id) { const el=document.getElementById(id); el.classList.toggle('open'); if(el.classList.contains('open')){const h=document.querySelector('.site-header')?.offsetHeight||64;setTimeout(()=>window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-h-12,behavior:'smooth'}),50);} }
+function openLightbox(src) { const lb=document.getElementById('lightbox'),img=document.getElementById('lightbox-img'); img.src=src;lb.classList.add('visible');document.body.style.overflow='hidden'; }
+function closeLightbox() { document.getElementById('lightbox').classList.remove('visible');document.body.style.overflow=''; }
+function openVideoModal() { const m=document.getElementById('video-modal');m.style.display='flex';document.body.style.overflow='hidden';const v=document.getElementById('modal-video');if(v){v.currentTime=0;v.play().catch(()=>{});} }
+function closeVideoModal() { const m=document.getElementById('video-modal');m.style.display='none';document.body.style.overflow='';const v=document.getElementById('modal-video');if(v)v.pause(); }
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLightbox();closeVideoModal();}});
+document.querySelectorAll('.img-wrap img').forEach(img=>{img.addEventListener('click',e=>{e.stopPropagation();openLightbox(img.src);});});
+document.getElementById('search-input').addEventListener('input',function(){const q=this.value.trim().toLowerCase(),res=document.getElementById('search-results'),list=document.getElementById('search-result-list');if(q.length<2){res.style.display='none';return;}const m=SI.filter(i=>i.t.toLowerCase().includes(q)||i.k.toLowerCase().includes(q)||i.s.toLowerCase().includes(q));list.innerHTML=m.length?m.map(x=>`<div class="sri" onclick="goTo('${x.a}')"><div class="sri-title">${x.t}</div><div class="sri-sec">${x.s}</div></div>`).join(''):`<div class="sri-no">No results for "${q}"</div>`;res.style.display='block';});
+function goTo(a) { document.getElementById('search-results').style.display='none';document.getElementById('search-input').value='';const el=document.querySelector(a);if(!el)return;if(a.startsWith('#arc-')){const i=document.getElementById(a.slice(1));if(i&&!i.classList.contains('open'))i.classList.add('open');}const h=document.querySelector('.site-header')?.offsetHeight||64;setTimeout(()=>window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-h-12,behavior:'smooth'}),50);}
+document.addEventListener('click',e=>{if(!e.target.closest('.search-wrap'))document.getElementById('search-results').style.display='none';});
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();const h=document.querySelector('.site-header')?.offsetHeight||64;window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-h-12,behavior:'smooth'});}});});
+
+const SCRIPT_URL='https://script.google.com/macros/s/AKfycbyPrd_h2ShVVsHefCFUjCr8HMsmv7WfBNNl8tvhYo7s5_dEmk3GXZktvydhZhCqjN0zFQ/exec';
+const TRACK_TOKEN='hb-se-weekly-2026';
+let visitor={email:'',name:''},sessionStart=Date.now(),sectionsViewed=new Set(),pastIssuesOpened=new Set(),trackingFired=false;
+function initSignIn(){const s=localStorage.getItem('sew_visitor');if(s){try{visitor=JSON.parse(s);if(visitor.email&&visitor.name){startTracking();return;}}catch(e){}}setTimeout(()=>document.getElementById('signin-overlay').classList.add('visible'),800);}
+function submitSignIn(){const name=document.getElementById('signin-name').value.trim(),email=document.getElementById('signin-email').value.trim().toLowerCase(),ef=document.getElementById('signin-email');if(!name){document.getElementById('signin-name').style.borderColor='#e55ccd';document.getElementById('signin-name').placeholder='Please enter your name';return;}if(!email||!email.endsWith('@joinhomebase.com')){ef.style.borderColor='#e55ccd';ef.value='';ef.placeholder='Must be a @joinhomebase.com email';return;}visitor={name,email};localStorage.setItem('sew_visitor',JSON.stringify(visitor));document.getElementById('signin-overlay').classList.remove('visible');startTracking();}
+document.addEventListener('DOMContentLoaded',()=>{['signin-name','signin-email'].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('keydown',e=>{if(e.key==='Enter')submitSignIn();});});initSignIn();});
+function startTracking(){sessionStart=Date.now();const k='sew_visits_'+visitor.email,v=parseInt(localStorage.getItem(k)||'0')+1;localStorage.setItem(k,v);visitor.visitCount=v;const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting&&e.intersectionRatio>0.3){const id=e.target.id;if(id)sectionsViewed.add(sectionLabel(id));}});},{threshold:0.3});['product','pmm','revops','archive'].forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')fireTracking();});window.addEventListener('beforeunload',()=>fireTracking());window.addEventListener('pagehide',()=>fireTracking());}
+function sectionLabel(id){const map={product:'Product',pmm:'PMM',revops:'RevOps',archive:'Archive'};return map[id]||id;}
+function getDevice(){const ua=navigator.userAgent;if(/Mobi|Android/i.test(ua))return 'Mobile';if(/Tablet|iPad/i.test(ua))return 'Tablet';return 'Desktop';}
+function getBrowser(){const ua=navigator.userAgent;if(/Edg/i.test(ua))return 'Edge';if(/Chrome/i.test(ua))return 'Chrome';if(/Safari/i.test(ua))return 'Safari';if(/Firefox/i.test(ua))return 'Firefox';return 'Other';}
+function fireTracking(){if(trackingFired||!visitor.email)return;trackingFired=true;const ts=Math.round((Date.now()-sessionStart)/1000),secs=[...sectionsViewed].join(', ')||'—',pi=[...pastIssuesOpened].join(', ')||'—',params=new URLSearchParams({token:TRACK_TOKEN,email:visitor.email,name:visitor.name,visitCount:visitor.visitCount||1,timeSpent:ts,issue:'Issue #15 (Jun 8)',sections:secs,pastIssues:pi,device:getDevice(),browser:getBrowser()}),url=SCRIPT_URL+'?'+params.toString();try{fetch(url,{method:'GET',keepalive:true}).catch(()=>{});}catch(e){try{new Image().src=url;}catch(e2){}}}
+</script>
+</body>
+</html>
