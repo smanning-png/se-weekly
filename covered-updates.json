@@ -1,0 +1,41 @@
+{
+  "lastUpdated": "2026-06-17T12:00:00Z",
+  "covered": [
+    {
+      "issue": 16,
+      "issueDate": "2026-06-15",
+      "department": "Product / CS Ops",
+      "title": "California Alternative Workweek 4x10 Settings — Live in Production",
+      "topicKey": "california-alternative-workweek-4x10",
+      "source": "https://pioneerworks.slack.com/archives/C02M0QQKANA/p1781558754221809",
+      "summary": "CA locations can opt in per employee to a 4-days/10-hour alternative workweek setting so daily overtime starts after 10 hours for approved schedules."
+    },
+    {
+      "issue": 16,
+      "issueDate": "2026-06-15",
+      "department": "Product / CS Ops",
+      "title": "New Left Navigation — Moving to 100% of Customers June 17",
+      "topicKey": "left-navigation-100-percent-rollout",
+      "source": "https://pioneerworks.slack.com/archives/C02M0QQKANA/p1781549804890539",
+      "summary": "The redesigned left navigation moves to all customers on June 17 and should be treated as the default web experience."
+    },
+    {
+      "issue": 16,
+      "issueDate": "2026-06-15",
+      "department": "RevOps",
+      "title": "Blitz Mode Relaunched Monday with GTM OS Fixes Live",
+      "topicKey": "blitz-mode-relaunch-gtm-os-fixes",
+      "source": "https://pioneerworks.slack.com/archives/C0AP27WT9LJ/p1781528978470729",
+      "summary": "Blitz Mode relaunched June 15 after GTM OS fixes for account loading, ranking, cadence spacing, talk tracks, notes, locations, payroll status, and skip reasons."
+    },
+    {
+      "issue": 16,
+      "issueDate": "2026-06-15",
+      "department": "RevOps",
+      "title": "Inbound Inception Pipeline Is Now in GTM OS",
+      "topicKey": "inbound-inception-pipeline-gtm-os-live",
+      "source": "https://pioneerworks.slack.com/archives/C0AP27WT9LJ/p1781372130283569",
+      "summary": "Inbound Inception's existing pipeline moved into GTM OS on June 15 with stage-aware cadence placement and manual rep calls first."
+    }
+  ]
+}
