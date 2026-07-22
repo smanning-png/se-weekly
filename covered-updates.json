@@ -1,0 +1,68 @@
+{
+  "lastUpdated": "2026-07-22T13:34:23.608Z",
+  "covered": [
+    {
+      "issue": 20,
+      "issueDate": "2026-07-20",
+      "department": "Sales Enablement",
+      "title": "Build Momentum: Raise Transfer Start Rate from 35% to 45%",
+      "topicKey": "transfer-start-momentum",
+      "source": "Sarah Manning / Gong analysis",
+      "summary": "Q3 coaching focus on firm next steps and urgency to improve transfer start rate."
+    },
+    {
+      "issue": 20,
+      "issueDate": "2026-07-20",
+      "department": "Product",
+      "title": "Failed Direct Deposit: Print a Paper Check While Funds Clear",
+      "topicKey": "failed-direct-deposit-paper-check",
+      "source": "https://pioneerworks.slack.com/archives/C02M0QQKANA/p1784039763642509",
+      "summary": "Manage Payment now offers paper-check printing while a blocked refund completes."
+    },
+    {
+      "issue": 20,
+      "issueDate": "2026-07-20",
+      "department": "Product",
+      "title": "Admin Shows Current and Future-Dated Payroll Packages",
+      "topicKey": "admin-future-payroll-packages",
+      "source": "https://pioneerworks.slack.com/archives/C02M0QQKANA/p1784314588121189?thread_ts=1784314543.225029&cid=C02M0QQKANA",
+      "summary": "Admin distinguishes current and scheduled payroll packages and displays future effective dates."
+    },
+    {
+      "issue": 20,
+      "issueDate": "2026-07-20",
+      "department": "Product",
+      "title": "Biometric Sign-In Is Coming to Mobile",
+      "topicKey": "mobile-biometric-signin",
+      "source": "https://pioneerworks.slack.com/archives/C02M0QQKANA/p1783984632087739",
+      "summary": "Face ID, Touch ID, and Android fingerprint sign-in target mobile v5.12; two iPhone demo recordings are included."
+    },
+    {
+      "issue": 20,
+      "issueDate": "2026-07-20",
+      "department": "CS Ops",
+      "title": "Check Refile Requests Can Stay Blocked During Recollection",
+      "topicKey": "check-refile-recollection-blocker",
+      "source": "CS Ops / Check workflow guidance approved by Sarah",
+      "summary": "Refile requests remain blocked until Check recollects funds, then sync automatically."
+    },
+    {
+      "issue": 20,
+      "issueDate": "2026-07-20",
+      "department": "RevOps",
+      "title": "Payroll Pricing Experiment Expands to 100%",
+      "topicKey": "payroll-pricing-experiment",
+      "source": "Internal pricing experiment update approved by Sarah",
+      "summary": "Payroll pricing experiment expanded to its full intended audience."
+    },
+    {
+      "issue": 20,
+      "issueDate": "2026-07-20",
+      "department": "RevOps",
+      "title": "IMP Calendly Selector Moves to Front of Wizard",
+      "topicKey": "implementation-calendly-handoff",
+      "source": "Sarah Manning / New IMP Workflow.mp4",
+      "summary": "Follow-up: the IMP Calendly selector moves to the front of the wizard July 23."
+    }
+  ]
+}
