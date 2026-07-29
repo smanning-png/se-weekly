@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-22T13:34:23.608Z",
+  "lastUpdated": "2026-07-29T13:08:15.991Z",
   "covered": [
     {
       "issue": 20,
@@ -63,6 +63,42 @@
       "topicKey": "implementation-calendly-handoff",
       "source": "Sarah Manning / New IMP Workflow.mp4",
       "summary": "Follow-up: the IMP Calendly selector moves to the front of the wizard July 23."
+    },
+    {
+      "issue": 21,
+      "issueDate": "2026-07-27",
+      "department": "Product",
+      "title": "Schedule Builder Agent Starts with a 1,000-Customer Beta",
+      "topicKey": "schedule-builder-agent",
+      "source": "https://pioneerworks.slack.com/archives/C0AKBF4CMB7/p1785095665169219",
+      "summary": "Follow-up to Issue 18: Schedule Builder Agent begins with a stratified cohort of about 1,000 customers before the broader P1 rollout."
+    },
+    {
+      "issue": 21,
+      "issueDate": "2026-07-27",
+      "department": "Product",
+      "title": "New Safeguards When a Payroll Bank Account Changes",
+      "topicKey": "payroll-bank-account-switching-safeguards",
+      "source": "https://pioneerworks.slack.com/archives/C02M0QQKANA/p1784655827030659",
+      "summary": "Default-account changes can update open draft payrolls, while Homebase can promote a usable account when the old default fails."
+    },
+    {
+      "issue": 21,
+      "issueDate": "2026-07-27",
+      "department": "Product",
+      "title": "Employee Onboarding Packets Get a Designbase Refresh",
+      "topicKey": "onboarding-packet-designbase-restyle",
+      "source": "https://pioneerworks.slack.com/archives/C02M0QQKANA/p1784753305892319",
+      "summary": "Employee-facing web packets get a Designbase visual refresh without changing fields, requirements, or submission logic."
+    },
+    {
+      "issue": 21,
+      "issueDate": "2026-07-27",
+      "department": "RevOps",
+      "title": "Right-Time Calling Flags When an Opportunity Is Online Now",
+      "topicKey": "gtm-os-right-time-calling",
+      "source": "https://www.loom.com/share/07c9720f7324463baaba8299a887c090",
+      "summary": "Four sellers are testing a red GTM OS banner that signals when an opportunity is online and ready for a timely call."
     }
   ]
 }
