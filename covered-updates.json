@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-29T13:08:15.991Z",
+  "lastUpdated": "2026-08-05T04:59:31.571Z",
   "covered": [
     {
       "issue": 20,
@@ -27,15 +27,6 @@
       "topicKey": "admin-future-payroll-packages",
       "source": "https://pioneerworks.slack.com/archives/C02M0QQKANA/p1784314588121189?thread_ts=1784314543.225029&cid=C02M0QQKANA",
       "summary": "Admin distinguishes current and scheduled payroll packages and displays future effective dates."
-    },
-    {
-      "issue": 20,
-      "issueDate": "2026-07-20",
-      "department": "Product",
-      "title": "Biometric Sign-In Is Coming to Mobile",
-      "topicKey": "mobile-biometric-signin",
-      "source": "https://pioneerworks.slack.com/archives/C02M0QQKANA/p1783984632087739",
-      "summary": "Face ID, Touch ID, and Android fingerprint sign-in target mobile v5.12; two iPhone demo recordings are included."
     },
     {
       "issue": 20,
@@ -92,13 +83,49 @@
       "summary": "Employee-facing web packets get a Designbase visual refresh without changing fields, requirements, or submission logic."
     },
     {
-      "issue": 21,
-      "issueDate": "2026-07-27",
+      "issue": 22,
+      "issueDate": "2026-08-03",
+      "department": "Product",
+      "title": "Business Insurance Gets a Homebase Hub—and General Liability",
+      "topicKey": "business-insurance-ergo-next",
+      "source": "https://pioneerworks.slack.com/archives/C02M0QQKANA/p1785882401902959",
+      "summary": "An owner-only ERGO NEXT hub surfaces pay-as-you-go Workers’ Comp for eligible payroll customers and General Liability for payroll and non-payroll owners."
+    },
+    {
+      "issue": 22,
+      "issueDate": "2026-08-03",
+      "department": "Product",
+      "title": "Custom Payroll Reports Now Arrive by Email",
+      "topicKey": "custom-payroll-reports-async-email",
+      "source": "https://pioneerworks.slack.com/archives/C02M0QQKANA/p1785272161862589",
+      "summary": "Saved Custom Reports generate in the background, continue downloading in-browser, and also arrive by email."
+    },
+    {
+      "issue": 22,
+      "issueDate": "2026-08-03",
+      "department": "Product",
+      "title": "Mobile Adds a Biometric Sign-In Reminder",
+      "topicKey": "mobile-biometric-signin",
+      "source": "https://pioneerworks.slack.com/archives/C02M0QQKANA/p1785869561366959",
+      "summary": "Follow-up: an optional employee Dashboard card will accelerate discovery of Face ID, Touch ID, and fingerprint sign-in."
+    },
+    {
+      "issue": 22,
+      "issueDate": "2026-08-03",
+      "department": "Sales Enablement",
+      "title": "Score, Coach, and Start Strong",
+      "topicKey": "se-spiced-mastercraft-transfer-dashboard",
+      "source": "Sarah Manning / Gong, Google Calendar, and Salesforce",
+      "summary": "SE reminder to use the updated SPICED scorecard, book MasterCraft coaching, and track Transfer Start Legends in Salesforce."
+    },
+    {
+      "issue": 22,
+      "issueDate": "2026-08-03",
       "department": "RevOps",
-      "title": "Right-Time Calling Flags When an Opportunity Is Online Now",
+      "title": "Right-Time Calling Reps: Action the Banner and Surface Blockers",
       "topicKey": "gtm-os-right-time-calling",
-      "source": "https://www.loom.com/share/07c9720f7324463baaba8299a887c090",
-      "summary": "Four sellers are testing a red GTM OS banner that signals when an opportunity is online and ready for a timely call."
+      "source": "https://pioneerworks.slack.com/archives/C0ALYB09NBH/p1785857318062009",
+      "summary": "Follow-up: pilot reps should action Online Now banners, surface blockers, and avoid claiming an unproven connect-rate lift."
     }
   ]
 }
