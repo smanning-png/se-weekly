@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-05T04:59:31.571Z",
+  "lastUpdated": "2026-08-12T13:45:54.136Z",
   "covered": [
     {
       "issue": 20,
@@ -126,6 +126,42 @@
       "topicKey": "gtm-os-right-time-calling",
       "source": "https://pioneerworks.slack.com/archives/C0ALYB09NBH/p1785857318062009",
       "summary": "Follow-up: pilot reps should action Online Now banners, surface blockers, and avoid claiming an unproven connect-rate lift."
+    },
+    {
+      "issue": 23,
+      "issueDate": "2026-08-10",
+      "department": "Product",
+      "title": "Time Card Review Assistant: A Sneak Peek at What’s Coming",
+      "topicKey": "timecard-review-assistant-beta",
+      "source": "https://pioneerworks.slack.com/archives/C02M0QQKANA/p1785972303855369",
+      "summary": "A very limited web beta previews a clearer Daily Review and resolution flow for four pay-impacting time-card issue types."
+    },
+    {
+      "issue": 23,
+      "issueDate": "2026-08-10",
+      "department": "Product",
+      "title": "Payroll Now Explains Multi-Rate Overtime Calculations",
+      "topicKey": "weighted-wage-overtime-explanation",
+      "source": "https://pioneerworks.slack.com/archives/C02M0QQKANA/p1786128752172299",
+      "summary": "The weighted-wage modal now shows role-specific overtime rates and expandable calculation details for multi-rate weeks."
+    },
+    {
+      "issue": 23,
+      "issueDate": "2026-08-10",
+      "department": "Product",
+      "title": "Payroll Summary Adds Taxable-Wage Columns",
+      "topicKey": "payroll-summary-taxable-wages",
+      "source": "https://pioneerworks.slack.com/archives/C02M0QQKANA/p1786047652603099",
+      "summary": "An optional Payroll Summary checkbox adds per-tax, wage-base-limited taxable-wage columns to the CSV."
+    },
+    {
+      "issue": 23,
+      "issueDate": "2026-08-10",
+      "department": "PMM",
+      "title": "Spring Payroll Promo Closes at $117K in New MRR",
+      "topicKey": "spring-payroll-promo-readout",
+      "source": "https://pioneerworks.slack.com/archives/C0B9H55QH3R/p1786134984926409",
+      "summary": "The expired three-month-free promo converted 4,991 opportunities and highlighted deadline urgency, video, and cost framing as winning approaches."
     }
   ]
 }
