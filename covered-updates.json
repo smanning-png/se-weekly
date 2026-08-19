@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-12T13:45:54.136Z",
+  "lastUpdated": "2026-08-19T03:30:02.964Z",
   "covered": [
     {
       "issue": 20,
@@ -162,6 +162,42 @@
       "topicKey": "spring-payroll-promo-readout",
       "source": "https://pioneerworks.slack.com/archives/C0B9H55QH3R/p1786134984926409",
       "summary": "The expired three-month-free promo converted 4,991 opportunities and highlighted deadline urgency, video, and cost framing as winning approaches."
+    },
+    {
+      "issue": 24,
+      "issueDate": "2026-08-17",
+      "department": "PMM",
+      "title": "Payroll Pricing Communication Is Coming for Existing Customers",
+      "topicKey": "payroll-existing-customer-price-increase-2026",
+      "source": "Sarah Manning / approved newsletter input",
+      "summary": "Marketing is targeting September 2 for an email to impacted existing Payroll customers, with coordinated CX and Sales churn-response enablement planned first."
+    },
+    {
+      "issue": 24,
+      "issueDate": "2026-08-17",
+      "department": "Product",
+      "title": "Download an Individual Employee’s Current-Year Draft W-2",
+      "topicKey": "current-year-draft-w2-downloads",
+      "source": "https://pioneerworks.slack.com/archives/C02M0QQKANA/p1786634411925079",
+      "summary": "Employers can generate one employee’s current-year draft W-2 in-browser from Team → W-2s and 1099s."
+    },
+    {
+      "issue": 24,
+      "issueDate": "2026-08-17",
+      "department": "Product",
+      "title": "Autopayroll Reminders Now Flag Timecards Needing Review",
+      "topicKey": "autopayroll-timecard-review-reminder",
+      "source": "https://pioneerworks.slack.com/archives/C02M0QQKANA/p1786564210418419",
+      "summary": "Upcoming-submission reminders now show open timecard counts, issue types, and a direct review action."
+    },
+    {
+      "issue": 24,
+      "issueDate": "2026-08-17",
+      "department": "Product",
+      "title": "Roles & Wages Redesign Starts with New Companies",
+      "topicKey": "roles-wages-redesign-rollout",
+      "source": "https://pioneerworks.slack.com/archives/C02M0QQKANA/p1786400916712069",
+      "summary": "A controlled first phase gives about 1% of new companies a simpler, effective-dated roles and wages experience."
     }
   ]
 }
