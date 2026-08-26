@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-19T14:06:19Z",
+  "lastUpdated": "2026-08-26T01:45:52.449Z",
   "covered": [
     {
       "issue": 20,
@@ -131,15 +131,6 @@
       "issue": 23,
       "issueDate": "2026-08-10",
       "department": "Product",
-      "title": "Time Card Review Assistant: A Sneak Peek at What’s Coming",
-      "topicKey": "timecard-review-assistant-beta",
-      "source": "https://pioneerworks.slack.com/archives/C02M0QQKANA/p1785972303855369",
-      "summary": "A very limited web beta previews a clearer Daily Review and resolution flow for four pay-impacting time-card issue types."
-    },
-    {
-      "issue": 23,
-      "issueDate": "2026-08-10",
-      "department": "Product",
       "title": "Payroll Now Explains Multi-Rate Overtime Calculations",
       "topicKey": "weighted-wage-overtime-explanation",
       "source": "https://pioneerworks.slack.com/archives/C02M0QQKANA/p1786128752172299",
@@ -162,15 +153,6 @@
       "topicKey": "spring-payroll-promo-readout",
       "source": "https://pioneerworks.slack.com/archives/C0B9H55QH3R/p1786134984926409",
       "summary": "The expired three-month-free promo converted 4,991 opportunities and highlighted deadline urgency, video, and cost framing as winning approaches."
-    },
-    {
-      "issue": 24,
-      "issueDate": "2026-08-17",
-      "department": "PMM",
-      "title": "Payroll Base Price Is Planned to Increase from $39 to $49",
-      "topicKey": "payroll-existing-customer-price-increase-2026",
-      "source": "Sarah Manning / approved newsletter input",
-      "summary": "The Payroll base price point for impacted existing customers is planned to increase from $39 to $49, with Marketing targeting September 2 and coordinated CX and Sales churn-response enablement planned first."
     },
     {
       "issue": 24,
@@ -198,6 +180,51 @@
       "topicKey": "roles-wages-redesign-rollout",
       "source": "https://pioneerworks.slack.com/archives/C02M0QQKANA/p1786400916712069",
       "summary": "A controlled first phase gives about 1% of new companies a simpler, effective-dated roles and wages experience."
+    },
+    {
+      "issue": 25,
+      "issueDate": "2026-08-24",
+      "department": "PMM",
+      "title": "Payroll Price Increase Is Being Reconsidered",
+      "topicKey": "payroll-existing-customer-price-increase-2026",
+      "source": "Sarah Manning / approved newsletter direction",
+      "summary": "The planned Payroll base-price increase is under review; Sales will receive the final decision September 1, with no action required beforehand."
+    },
+    {
+      "issue": 25,
+      "issueDate": "2026-08-24",
+      "department": "Product",
+      "title": "In-App Sales Connect Turns More Setup Prospects into Live Conversations",
+      "topicKey": "in-app-sales-connect-rollout",
+      "source": "https://docs.google.com/presentation/d/133mfgZKcF4RuR8o9xXhXr11Ox0FgSorG_0dc3saxelY/edit",
+      "summary": "A 100% rollout follows a 47% lift in meaningful connects and an 8% lift in transfer start rate among setup prospects."
+    },
+    {
+      "issue": 25,
+      "issueDate": "2026-08-24",
+      "department": "Product",
+      "title": "The Roster Page Moves into a Full-Width Designbase Shell",
+      "topicKey": "roster-page-designbase-migration",
+      "source": "https://pioneerworks.slack.com/archives/C02M0QQKANA/p1787157191197359",
+      "summary": "The web Team Roster moved into a full-width Designbase shell without changing data, permissions, or workflows."
+    },
+    {
+      "issue": 25,
+      "issueDate": "2026-08-24",
+      "department": "Product",
+      "title": "Time Card Assistant Expands Across Web and Mobile",
+      "topicKey": "timecard-review-assistant-beta",
+      "source": "https://pioneerworks.slack.com/archives/C02M0QQKANA/p1787149369608019",
+      "summary": "Follow-up to Issue 23: the monitored web and mobile cohort expanded to 2,150 eligible companies."
+    },
+    {
+      "issue": 25,
+      "issueDate": "2026-08-24",
+      "department": "CS Ops",
+      "title": "Payroll Filing Corrections: Two Separate Issues and the Right Talk Tracks",
+      "topicKey": "payroll-filing-corrections-oh-al-mo-2026",
+      "source": "https://pioneerworks.slack.com/archives/C05LYTLA29J/p1787114567424559",
+      "summary": "Alabama and Missouri had late filings, while Ohio RITA payments were timely but some filings lacked municipality codes."
     }
   ]
 }
